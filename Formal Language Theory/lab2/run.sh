@@ -1,0 +1,1 @@
+/usr/local/bin/stack build --exec stack-exe

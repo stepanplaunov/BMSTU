@@ -1,0 +1,86 @@
+USE master;
+IF DB_ID ('Lab') IS NOT NULL
+DROP DATABASE [Lab]
+GO
+
+
+CREATE DATABASE Lab
+ON (
+	NAME = Lab_DB, 
+	FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL15.LOCAL\MSSQL\DATA\lab5db.mdf',
+	SIZE = 10MB,
+	MAXSIZE = 1GB,
+	FILEGROWTH = 5MB
+)
+LOG ON (
+	NAME = Lab_DB_LOG, 
+	FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL15.LOCAL\MSSQL\DATA\lab5log.ldf',
+	SIZE = 10MB,
+	MAXSIZE = 30MB,
+	FILEGROWTH = 5MB
+);
+GO
+
+USE Lab;
+GO
+
+CREATE TABLE User_Table (
+	UserId INT PRIMARY KEY NOT NULL,
+	Birthday Date NULL,
+	FirstName Char(50) NOT NULL,
+	LastName Char(50) NOT NULL,
+	Phone Char(15) NOT NULL,
+	Email Char(318) NOT NULL,
+);
+GO
+
+ALTER DATABASE Lab
+ADD FILEGROUP Lab_fg;
+GO
+
+ALTER DATABASE Lab
+ADD FILE (
+	NAME = Textiles_File,
+	FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL15.LOCAL\MSSQL\DATA\textiles.ndf',
+	SIZE = 10MB,
+	MAXSIZE = 25MB,
+	FILEGROWTH = 5MB
+) TO FILEGROUP Lab_FG
+GO
+
+ALTER DATABASE Lab
+MODIFY FILEGROUP Lab_fg DEFAULT;
+GO
+
+CREATE TABLE Textiles_Table (
+	Article INT NOT NULL,
+	LmageLink Char(2083) NOT NULL,
+	Color INT NULL,
+	Material INT NULL,
+	BaseWashPrice Money NULL
+);
+GO
+
+ALTER DATABASE Lab
+MODIFY FILEGROUP [PRIMARY] DEFAULT;
+GO
+
+DROP TABLE Textiles_table
+
+ALTER DATABASE Lab
+REMOVE FILE Textiles_File;
+GO
+
+ALTER DATABASE Lab
+REMOVE FILEGROUP Lab_fg;
+GO
+
+CREATE SCHEMA LabSchema
+GO
+
+ALTER SCHEMA LabSchema TRANSFER User_Table
+GO
+
+DROP TABLE LabSchema.[User_Table]
+DROP SCHEMA LabSchema
+GO

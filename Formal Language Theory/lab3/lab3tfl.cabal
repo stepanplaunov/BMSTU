@@ -1,0 +1,90 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           lab3tfl
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/Github username here/lab3tfl#readme>
+homepage:       https://github.com/Github username here/lab3tfl#readme
+bug-reports:    https://github.com/Github username here/lab3tfl/issues
+author:         Author name here
+maintainer:     Author email here
+copyright:      2019 Author name here
+license:        BSD3
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/Github username here/lab3tfl
+
+library
+  exposed-modules:
+      Graphvis
+      WriteRunDot
+  other-modules:
+      Paths_lab3tfl
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , fgl
+    , filepath
+    , graphviz
+    , loops
+    , regex-posix
+    , regexpr
+    , rio
+    , split
+    , text
+    , timeit
+  default-language: Haskell2010
+
+executable lab3tfl-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_lab3tfl
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , fgl
+    , filepath
+    , graphviz
+    , lab3tfl
+    , loops
+    , regex-posix
+    , regexpr
+    , rio
+    , split
+    , text
+    , timeit
+  default-language: Haskell2010
+
+test-suite lab3tfl-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_lab3tfl
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , containers
+    , fgl
+    , filepath
+    , graphviz
+    , lab3tfl
+    , loops
+    , regex-posix
+    , regexpr
+    , rio
+    , split
+    , text
+    , timeit
+  default-language: Haskell2010

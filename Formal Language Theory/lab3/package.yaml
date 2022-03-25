@@ -1,0 +1,56 @@
+name:                lab3tfl
+version:             0.1.0.0
+github:              "Github username here/lab3tfl"
+license:             BSD3
+author:              "Author name here"
+maintainer:          "Author email here"
+copyright:           "2019 Author name here"
+
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            App category here
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/Github username here/lab3tfl#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- regex-posix
+- regexpr
+- split
+- loops
+- text
+- containers
+- fgl
+- graphviz
+- rio
+- filepath
+- timeit
+
+library:
+  source-dirs: src
+
+executables:
+  lab3tfl-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - lab3tfl
+
+tests:
+  lab3tfl-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - lab3tfl
