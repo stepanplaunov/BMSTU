@@ -1,0 +1,101 @@
+[1 of 9] Compiling Data.Encoding.Preprocessor.XMLMapping ( Data/Encoding/Preprocessor/XMLMapping.hs, /tmp/stack-a13890ce0ad9a1ac/encoding-0.8.6/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.2.1.0/setup/Data/Encoding/Preprocessor/XMLMapping.o )
+
+Data/Encoding/Preprocessor/XMLMapping.hs:50:44: warning: [-Wtabs]
+    Tab character found here, and in 11 further locations.
+    Please use spaces instead.
+   |
+50 | newtype History = History (List1 Modified)              deriving (Eq,Show)
+   |                                            ^^^^^
+[2 of 9] Compiling Data.Static      ( Data/Static.hs, /tmp/stack-a13890ce0ad9a1ac/encoding-0.8.6/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.2.1.0/setup/Data/Static.o )
+
+Data/Static.hs:49:25: warning: [-Woverflowed-literals]
+    Literal -1 is out of the Word32 range 0..4294967295
+   |
+49 |     gen Nothing = gen (-1::Word32)
+   |                         ^
+[3 of 9] Compiling Data.Array.Static.Builder ( Data/Array/Static/Builder.hs, /tmp/stack-a13890ce0ad9a1ac/encoding-0.8.6/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.2.1.0/setup/Data/Array/Static/Builder.o )
+[4 of 9] Compiling Data.Map.Static.Builder ( Data/Map/Static/Builder.hs, /tmp/stack-a13890ce0ad9a1ac/encoding-0.8.6/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.2.1.0/setup/Data/Map/Static/Builder.o )
+[5 of 9] Compiling Data.CharMap.Builder ( Data/CharMap/Builder.hs, /tmp/stack-a13890ce0ad9a1ac/encoding-0.8.6/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.2.1.0/setup/Data/CharMap/Builder.o )
+[6 of 9] Compiling Data.Encoding.Preprocessor.XMLMappingBuilder ( Data/Encoding/Preprocessor/XMLMappingBuilder.hs, /tmp/stack-a13890ce0ad9a1ac/encoding-0.8.6/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.2.1.0/setup/Data/Encoding/Preprocessor/XMLMappingBuilder.o )
+[7 of 9] Compiling Data.Encoding.Preprocessor.Mapping ( Data/Encoding/Preprocessor/Mapping.hs, /tmp/stack-a13890ce0ad9a1ac/encoding-0.8.6/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.2.1.0/setup/Data/Encoding/Preprocessor/Mapping.o )
+[8 of 9] Compiling Main             ( /tmp/stack-a13890ce0ad9a1ac/encoding-0.8.6/Setup.hs, /tmp/stack-a13890ce0ad9a1ac/encoding-0.8.6/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.2.1.0/setup/Main.o )
+[9 of 9] Compiling StackSetupShim   ( /home/kolldun/.stack/setup-exe-src/setup-shim-mPHDZzAJ.hs, /tmp/stack-a13890ce0ad9a1ac/encoding-0.8.6/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.2.1.0/setup/StackSetupShim.o )
+Linking /tmp/stack-a13890ce0ad9a1ac/encoding-0.8.6/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.2.1.0/setup/setup ...
+Configuring encoding-0.8.6...
+Preprocessing library for encoding-0.8.6..
+Building library for encoding-0.8.6..
+[ 1 of 67] Compiling Control.Throws
+[ 2 of 67] Compiling Data.Encoding.Exception
+[ 3 of 67] Compiling Data.Encoding.ByteSource
+[ 4 of 67] Compiling Data.Encoding.ByteSink
+[ 5 of 67] Compiling Data.Encoding.Base
+[ 6 of 67] Compiling Data.Encoding.BootString
+[ 7 of 67] Compiling Data.Encoding.ASCII
+[ 8 of 67] Compiling Data.Encoding.ISO2022
+[ 9 of 67] Compiling Data.Encoding.ISO88591
+[10 of 67] Compiling Data.Encoding.KOI8R
+[11 of 67] Compiling Data.Encoding.KOI8U
+[12 of 67] Compiling Data.Encoding.UTF16
+[13 of 67] Compiling Data.Encoding.UTF32
+[14 of 67] Compiling Data.Encoding.UTF8
+[15 of 67] Compiling Data.Static
+
+Data/Static.hs:49:25: warning: [-Woverflowed-literals]
+    Literal -1 is out of the Word32 range 0..4294967295
+   |
+49 |     gen Nothing = gen (-1::Word32)
+   |                         ^
+[16 of 67] Compiling Data.Array.Static
+[17 of 67] Compiling Data.Map.Static
+[18 of 67] Compiling Data.CharMap
+[19 of 67] Compiling Data.Encoding.ShiftJIS
+[20 of 67] Compiling Data.Encoding.MacOSRoman
+[21 of 67] Compiling Data.Encoding.JISX0212
+[22 of 67] Compiling Data.Encoding.JISX0208
+[23 of 67] Compiling Data.Encoding.JISX0201
+[24 of 67] Compiling Data.Encoding.ISO2022JP
+[25 of 67] Compiling Data.Encoding.ISO88599
+[26 of 67] Compiling Data.Encoding.ISO88598
+[27 of 67] Compiling Data.Encoding.ISO88597
+[28 of 67] Compiling Data.Encoding.ISO88596
+[29 of 67] Compiling Data.Encoding.ISO88595
+[30 of 67] Compiling Data.Encoding.ISO88594
+[31 of 67] Compiling Data.Encoding.ISO88593
+[32 of 67] Compiling Data.Encoding.ISO88592
+[33 of 67] Compiling Data.Encoding.ISO885916
+[34 of 67] Compiling Data.Encoding.ISO885915
+[35 of 67] Compiling Data.Encoding.ISO885914
+[36 of 67] Compiling Data.Encoding.ISO885913
+[37 of 67] Compiling Data.Encoding.ISO885911
+[38 of 67] Compiling Data.Encoding.ISO885910
+[39 of 67] Compiling Data.Encoding.GB18030
+[40 of 67] Compiling Data.Encoding.CP932
+[41 of 67] Compiling Data.Encoding.CP874
+[42 of 67] Compiling Data.Encoding.CP869
+[43 of 67] Compiling Data.Encoding.CP866
+[44 of 67] Compiling Data.Encoding.CP865
+[45 of 67] Compiling Data.Encoding.CP864
+[46 of 67] Compiling Data.Encoding.CP863
+[47 of 67] Compiling Data.Encoding.CP862
+[48 of 67] Compiling Data.Encoding.CP861
+[49 of 67] Compiling Data.Encoding.CP860
+[50 of 67] Compiling Data.Encoding.CP857
+[51 of 67] Compiling Data.Encoding.CP855
+[52 of 67] Compiling Data.Encoding.CP852
+[53 of 67] Compiling Data.Encoding.CP850
+[54 of 67] Compiling Data.Encoding.CP775
+[55 of 67] Compiling Data.Encoding.CP737
+[56 of 67] Compiling Data.Encoding.CP437
+[57 of 67] Compiling Data.Encoding.CP1258
+[58 of 67] Compiling Data.Encoding.CP1257
+[59 of 67] Compiling Data.Encoding.CP1256
+[60 of 67] Compiling Data.Encoding.CP1255
+[61 of 67] Compiling Data.Encoding.CP1254
+[62 of 67] Compiling Data.Encoding.CP1253
+[63 of 67] Compiling Data.Encoding.CP1252
+[64 of 67] Compiling Data.Encoding.CP1251
+[65 of 67] Compiling Data.Encoding.CP1250
+[66 of 67] Compiling Data.Encoding
+[67 of 67] Compiling System.IO.Encoding
+Installing library in /home/kolldun/.stack/snapshots/x86_64-linux-tinfo6/f4affe7b8a18422703865438ef070451956fd72b0b27daa88fda47395d6c56cc/8.10.7/lib/x86_64-linux-ghc-8.10.7/encoding-0.8.6-4QhcrEeu1n4r1S1c4SBg7
+Registering library for encoding-0.8.6..

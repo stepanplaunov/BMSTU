@@ -1,0 +1,459 @@
+module Lib
+    ( someFunc
+    ) where
+
+someFunc :: IO ()
+someFunc = putStrLn "someFunc"
+--{-# LANGUAGE FlexibleContexts #-}
+--module Main where
+--import Text.Printf
+--import Text.RegexPR as EXPR
+--import System.IO (hSetEncoding, stdout, utf8)
+--import Data.Maybe (Maybe)
+--import qualified Data.Maybe as Mb
+--import Control.Monad
+--import Data.List.Split
+--import Data.List.Unique (allUnique)
+--import Data.Map (Map, insert)
+--import qualified Data.Map as Map
+--import Data.Char (ord, intToDigit)
+--import Data.List (foldl, intercalate, nub, sortOn, take, drop)
+--import Data.Text (drop)
+--import qualified Data.Text as Text
+--import Text.Regex.TDFA
+----import qualified System.IO.Encoding as E
+--import Lib
+--
+--
+--metaTags = ["TITLE", "AUTHOR","DEPT","REVIEWER"]
+--
+--bodyTags = ["START_TASK",
+-- "END_TASK",
+-- "START_BODY",
+-- "END_BODY",
+-- "START_TESTS",
+-- "END_TESTS"]
+--
+--(&=) x y = any (==x) y
+--
+--allTags = metaTags ++ bodyTags
+--
+--lookupMbList x mp = Mb.fromMaybe [] $ Map.lookup x mp
+--
+--deleteB :: String -> String
+--deleteB str = str =~ "([^\\{\\}])+" :: String
+--
+--parseLR :: [String] -> [String] -> [String] -> [String]
+--parseLR [] [] result = result
+--parseLR (tag:tags) (string:input) result
+-- | tag &= metaTags = parseLR tags input $ [deleteB $ string =~ "\\{(.)+\\}" :: String] ++ result
+-- | otherwise = filter ((/=0) . length) $ parseBodyLR bodyTags (splitOn " " $ intercalate " " (string:input)) result
+--
+--parseBodyLR :: [[Char]] -> [[Char]] -> [[Char]] -> [[Char]]
+--parseBodyLR _ [] result = result
+--parseBodyLR [] _ _ = []
+--parseBodyLR (tag:tags) (w:ws) result
+-- | length w == 0 = parseBodyLR (tag:tags) ws result
+-- | w /= tag = parseBodyLR (tag:tags) ws $ [(result !! 0) ++ " "++ w] ++ tail result
+-- | otherwise = parseBodyLR tags ws $ [""]++ result
+--
+--(!~) :: String -> String -> [String]
+--(!~) str reg = getAllTextMatches (str =~ reg :: AllTextMatches [] String)
+--
+--(#~) :: String -> String -> [(Int, Int)]
+--(#~) str reg = getAllMatches (str =~ reg) :: [(Int, Int)]
+--
+--(/~) :: String -> String -> (String, String, String, [String])
+--(/~) str reg =  (str =~ reg :: (String, String, String, [String]))
+--
+--putOnTag tag attr = "\\" ++ tag ++ "{" ++attr ++ "}\n"
+--
+--concatAttrs attrs = intercalate "\\\\" attrs
+--
+--giveLn x
+-- | length x == 0 = x
+-- | last x /= '\n' = x ++ "\n"
+-- | otherwise = x
+--
+--makeListingCoords [] [] result = result
+--makeListingCoords [] stack result = []
+--makeListingCoords (x:xs) stack result
+-- | tuplst x == 0 = makeListingCoords xs (x:stack) result
+-- | length stack >= 1 = makeListingCoords xs (tail stack) $ (head stack, x):result
+-- | otherwise = []
+--
+--generateListing listings code = map generateLising listings
+-- where
+--   generateLising ((b1, b2, _), (e1, e2, _))
+--    | length begin == 0 = []
+--    | otherwise = [id, name, text, desc]
+--    where
+--      beginText = substring b1 b2 code
+--      (_, begin, _, atr) = beginText =~ "{- BEGIN_L KEY = {([A-Za-z0-9]*)} NAME = {([A-Za-z0-9]*)}( DESC = {([A-Za-z0-9\\ ]*)})?-}" :: (String, String, String, [String])
+--      id = head atr
+--      name = atr !! 1
+--      desc = (atr++["",""]) !! 3
+--      text = substring (b1 + b2 + 1) (e1 - (b1 + b2 + 1)) code
+--
+--parseImports lMap text = resu
+-- where
+--   resu = setString text importsC codeText 0
+--   codeText = (foldl translateImport [] importsC)
+--   importsC = text #~ "[\\][\\$]IMPORT[\\][\\{]([A-Za-z0-9]*)[\\][\\}]"
+--   n = length text
+--   translateImport acum (i1, i2) = [makeDoc $ lookupMbList id lMap] ++ acum
+--    where
+--      (_, _, _, [id]) = (substring i1 i2 text) =~ "[\\][\\$]IMPORT[\\][\\{]([A-Za-z0-9]*)[\\][\\}]" :: (String, String, String, [String])
+--      makeDoc [name, txt, desc] = concat $
+--        ["\\begin{figure}[htb]\n",
+--        "\\footnotesize\n"]++ (putDesc desc)++
+--        [putOnTag "begin" "verbatim",
+--        txt,
+--        putOnTag "end" "verbatim",
+--        putOnTag "caption" name,
+--        putOnTag "end" "figure"]
+--      putDesc :: String -> [String]
+--      putDesc x
+--       | length x == 0 = []
+--       | otherwise = [x]
+--   setString result [] [] _ = result
+--   setString acum ((i1, i2):is) (x:xs) heap = setString newA is xs $ heap + size
+--    where
+--      newA = (substring 0 i3 acum) ++ x ++ (substring (i3 + i4 + 1) (length acum) acum)
+--      i3 = i1 + heap
+--      i4 = i2
+--      size = length x - i2 - 1
+--
+--translateBsl text = reverse $ foldl translateSym [] text
+-- where
+--   translateSym acum x = reverse (case x of {
+--                                    '\\' -> "\\textbackslash";
+--                                    '№' -> "\\textnumero";
+--                                    '_' -> "\\_";
+--                                    '&' -> "\\&";
+--                                    '%' -> "\\%";
+--                                    '{' -> "\\{";
+--                                    '$' -> "\\$";
+--                                    '}' -> "\\}";
+--                                    x -> [x];
+--                                    }) ++
+--                         acum
+--
+--translateLatin text = intercalate " " $ map translateWord $ splitOn " " text
+-- where
+--   banwords = ["\\$SYSTEM_", "\\$IMPORT\\{","\\textbackslash", "\\textnumero", "\\_", "\\$", "\\&", "\\%", "\\{", "\\}"]
+--   check word = any (word =~) banwords
+--   checkLatin word = word =~ "[A-Za-z]" -- && (word=~"\\,\\.\\_\\;\\:^]"
+--   translateWord x
+--    | check x = x
+--    | checkLatin x = putOnTag "texttt" x
+--    | otherwise = x
+--
+--translateSystem text = codeText
+-- where
+--   codeText = foldl translateSystem text systemC
+--   systemC = text #~ "[\\][\\$]SYSTEM[\\][\\_]([A-Za-z0-9]*)"
+--   n = length text
+--   translateSystem acum (i1, i2) = (substring 0 i1 acum) ++ (putOnTag "textsc" syst) ++ (substring (i1 + i2 + 1) n acum)
+--       where
+--         (_, _, _, [syst]) = substring i1 i2 acum =~ "[\\][\\$]SYSTEM[\\][\\_]([A-Za-z0-9]*)" :: (String, String, String, [String])
+--
+--tuplst (a, b, c) = c
+--
+--substring a b = (Data.List.take b).(Data.List.drop a)
+--
+--listing = ""
+--
+--printer [] = do return ()
+--printer (x:xs) = do
+--                   print x
+--                   printer xs
+--
+--main :: IO ()
+--main = do
+--         let labname = "lab2"
+--             result = ("test/"++labname++"/result.tex")
+--             dir = "test/" ++labname
+--         labBmstu <- readFile $ dir++"/lab_report.bmstu"
+--         preambula <- readFile "test/preambula.txt"
+--         code <- readFile $ dir++"/code.hs"
+--         let meta = lines labBmstu
+--             [title, author, dept, reviewer, task, body, test] = list
+--             list = reverse $ parseLR allTags meta []
+--             makeDoc = foldl (++) []
+--               [putOnTag "begin" "document",
+--               "\\maketitle\n",
+--               putOnTag "section" "Задача",
+--               giveLn parsedTask,
+--               putOnTag "section" "Реализация",
+--               giveLn parsedBody,
+--               putOnTag "section" "Тестирование",
+--               giveLn parsedTest,
+--               putOnTag "end" "document"]
+--             begins = map (add3 0) $ code #~ "{-BEGIN_L KEY = {([A-Za-z0-9]*)} NAME = {([A-Za-z0-9]*)}( DESC = {([A-Za-z0-9\\ ]*)})?-}"
+--             ends = map (add3 1) $ code #~ "{-END_L-}"
+--             add3 num (x, y) = (x, y, num)
+--             listings = sortOn (\(a,b,c) -> a) $ begins ++ ends
+--             tupfst (a, b, c) = a
+--             listingsP = makeListingCoords listings [] []
+--             checkListings = length listingsP == 0
+--             lst = generateListing listingsP code
+--             ids = map (!!0) lst
+--             lMap = Map.fromList $ map (\[a, b, c, d] -> (a, [b, withoutRules c, d])) lst
+--             beg = "{-BEGIN_L KEY = {([A-Za-z0-9]*)} NAME = {([A-Za-z0-9]*)}-}"
+--             end = "{-END_L-}"
+--             withoutRules x = intercalate "\n" $ filter (\x ->not (x =~ (end++"|"++beg))) $ splitOn "\n" x
+--             toParse x = parseImports lMap $ translateSystem $ translateLatin $ translateBsl x
+--             parsedTask = toParse task
+--             parsedBody = toParse body
+--             parsedTest = toParse test
+--         if any (\x -> 0 == length x) lst
+--         then print $ id "Wrong listings"
+--         else do
+--                if not $ allUnique ids
+--                then print $ id "Listings have same id"
+--                else do
+--                        print parsedTask
+--                        writeFile result $ preambula ++ "\n"
+--                        appendFile result $ putOnTag "title" title
+--                        appendFile result $ putOnTag "author" $ concatAttrs [author, "Группа: " ++ dept, "Преподаватель: " ++ reviewer]
+--                        appendFile result $ makeDoc
+----                        printer $ code !~ "{-BEGIN_L KEY = {([0-9]*)} NAME = {([A-Za-z0-9]*)}-}{-END_L-}-"
+----                        print $ "aa..cqwcqww{}\n\raa" !~ "(.|[[:space:]])+"
+----                        print lMap
+----                        print $ (translateBsl task) /~ "\\$IMPORT\\\\{([A-Za-z0-9]*)\\\\}"
+----                        print ("{Отчет по лабор}{аторной работе №5}" =~ "{(.)+}" :: String)
+
+
+
+--parseImports lMap text = codeText
+-- where
+--   codeText = foldl translateImport text importsC
+--   importsC = text #~ "[\\][\\$]IMPORT\\\\{([A-Za-z0-9]*)\\\\}"
+--   n = length text
+--   translateImport acum (i1, i2) = (substring 0 i1 acum) ++ (makeDoc $ lookupMbList id lMap) ++ (substring (i1 + i2 + 1) n acum)
+--    where
+--      (_, _, _, [id]) = (substring i1 i2 acum) /~ "[\\][\\$]IMPORT\\\\{([A-Za-z0-9]*)\\\\}"
+--      makeDoc [name, txt] = intercalate ""
+--        ["\\begin{figure}[htb]\n",
+--        "\\footnotesize\n",
+--        putOnTag "begin" "verbatim",
+--        txt,
+--        putOnTag "end" "verbatim",
+--        putOnTag "caption" name,
+--        putOnTag "end" "figure"]
+
+
+
+--{-# LANGUAGE FlexibleContexts #-}
+--module Main where
+--import Text.Printf
+--import Text.RegexPR as EXPR
+--import System.IO (hSetEncoding, stdout, utf8)
+--import Data.Maybe (Maybe)
+--import qualified Data.Maybe as Mb
+--import Control.Monad
+--import Data.List.Split
+--import Data.List.Unique (allUnique)
+--import Data.Map (Map, insert)
+--import qualified Data.Map as Map
+--import Data.Char (ord, intToDigit)
+--import Data.List (foldl, intercalate, nub, sortOn, take, drop)
+--import Data.Text (drop)
+--import qualified Data.Text as Text
+--import Text.Regex.TDFA
+----import qualified System.IO.Encoding as E
+--import Lib
+--
+--
+--metaTags = ["TITLE", "AUTHOR","DEPT","REVIEWER"]
+--bodyTags = ["START_TASK",
+-- "END_TASK",
+-- "START_BODY",
+-- "END_BODY",
+-- "START_TESTS",
+-- "END_TESTS"]
+--(&=) x y = any (==x) y
+--allTags = metaTags ++ bodyTags
+--lookupMbList x mp = Mb.fromMaybe [] $ Map.lookup x mp
+--deleteB :: String -> String
+--deleteB str = str =~ "([^\\{\\}])+" :: String
+--parseLR :: [String] -> [String] -> [String] -> [String]
+--parseLR [] [] result = result
+--parseLR (tag:tags) (string:input) result
+-- | tag &= metaTags = parseLR tags input $ [deleteB $ string =~ "\\{(.)+\\}" :: String] ++ result
+-- | otherwise = filter ((/=0) . length) $ parseBodyLR bodyTags (splitOn " " $ intercalate " " (string:input)) result
+--{-BEGIN_L KEY = {0} NAME = {parseBodyLR}-}
+--parseBodyLR :: [[Char]] -> [[Char]] -> [[Char]] -> [[Char]]
+--parseBodyLR _ [] result = result
+--parseBodyLR [] _ _ = []
+--parseBodyLR (tag:tags) (w:ws) result
+-- | length w == 0 = parseBodyLR (tag:tags) ws result
+-- | w /= tag = parseBodyLR (tag:tags) ws $ [(result !! 0) ++ " "++ w] ++ tail result
+-- | otherwise = parseBodyLR tags ws $ [""]++ result
+--{-END_L-}
+--
+--(!~) :: String -> String -> [String]
+--(!~) str reg = getAllTextMatches (str =~ reg :: AllTextMatches [] String)
+--(#~) :: String -> String -> [(Int, Int)]
+--(#~) str reg = getAllMatches (str =~ reg) :: [(Int, Int)]
+--(/~) :: String -> String -> (String, String, String, [String])
+--(/~) str reg =  (str =~ reg :: (String, String, String, [String]))
+--
+--putOnTag tag attr = "\\" ++ tag ++ "{" ++attr ++ "}\n"
+--concatAttrs attrs = intercalate "\\\\" attrs
+--giveLn x
+-- | length x == 0 = x
+-- | last x /= '\n' = x ++ "\n"
+-- | otherwise = x
+--makeListingCoords [] [] result = result
+--makeListingCoords [] stack result = []
+--makeListingCoords (x:xs) stack result
+-- | tuplst x == 0 = makeListingCoords xs (x:stack) result
+-- | length stack >= 1 = makeListingCoords xs (tail stack) $ (head stack, x):result
+-- | otherwise = []
+--generateListing listings code = map generateLising listings
+-- where
+--   generateLising ((b1, b2, _), (e1, e2, _))
+--    | length begin == 0 = []
+--    | otherwise = [id, name, text]
+--    where
+--      beginText = substring b1 b2 code
+--      (_, begin, _, atr) = beginText /~ "{-BEGIN_L KEY = {([A-Za-z0-9]*)} NAME = {([A-Za-z0-9]*)}-}"
+--      [id, name] = atr
+--      text = substring (b1 + b2 + 1) (e1 - (b1 + b2 + 1)) code
+--parseImports lMap text = resu
+-- where
+--   resu = setString text importsC codeText 0
+--   codeText = (foldl translateImport [] importsC)
+--   importsC = text #~ "[\\][\\$]IMPORT[\\][\\{]([A-Za-z0-9]*)[\\][\\}]"
+--   n = length text
+--   translateImport acum (i1, i2) = [makeDoc $ lookupMbList id lMap] ++ acum
+--    where
+--      (_, _, _, [id]) = (substring i1 i2 text) /~ "[\\][\\$]IMPORT[\\][\\{]([A-Za-z0-9]*)[\\][\\}]"
+--      makeDoc [name, txt] = intercalate ""
+--        ["\\begin{figure}[htb]\n",
+--        "\\footnotesize\n",
+--        putOnTag "begin" "verbatim",
+--        txt,
+--        putOnTag "end" "verbatim",
+--        putOnTag "caption" name,
+--        putOnTag "end" "figure"]
+--   setString result [] [] _ = result
+--   setString acum ((i1, i2):is) (x:xs) heap = setString newA is xs $ heap + size
+--    where
+--      newA = (substring 0 i3 acum) ++ x ++ (substring (i3 + i4 + 1) (length acum) acum)
+--      i3 = i1 + heap
+--      i4 = i2
+--      size = length x - i2 - 1
+--
+----parseImports lMap text = codeText
+---- where
+----   codeText = foldl translateImport text importsC
+----   importsC = text #~ "[\\][\\$]IMPORT\\\\{([A-Za-z0-9]*)\\\\}"
+----   n = length text
+----   translateImport acum (i1, i2) = (substring 0 i1 acum) ++ (makeDoc $ lookupMbList id lMap) ++ (substring (i1 + i2 + 1) n acum)
+----    where
+----      (_, _, _, [id]) = (substring i1 i2 acum) /~ "[\\][\\$]IMPORT\\\\{([A-Za-z0-9]*)\\\\}"
+----      makeDoc [name, txt] = intercalate ""
+----        ["\\begin{figure}[htb]\n",
+----        "\\footnotesize\n",
+----        putOnTag "begin" "verbatim",
+----        txt,
+----        putOnTag "end" "verbatim",
+----        putOnTag "caption" name,
+----        putOnTag "end" "figure"]
+--translateBsl text = reverse $ foldl translateSym [] text
+-- where
+--   translateSym acum x = reverse (case x of {
+--                                    '\\' -> "\\textbackslash";
+--                                    '№' -> "\\textnumero";
+--                                    '_' -> "\\_";
+--                                    '&' -> "\\&";
+--                                    '%' -> "\\%";
+--                                    '{' -> "\\{";
+--                                    '$' -> "\\$";
+--                                    '}' -> "\\}";
+--                                    x -> [x];
+--                                    }) ++
+--                         acum
+--translateLatin text = intercalate " " $ map translateWord $ splitOn " " text
+-- where
+--   banwords = ["\\$SYSTEM_", "\\$IMPORT\\{","\\textbackslash", "\\textnumero", "\\_", "\\$", "\\&", "\\%", "\\{", "\\}"]
+--   check word = any (\x -> word =~ x :: Bool) banwords
+--   checkLatin word = (word =~ "[A-Za-z]") -- && (word=~"\\,\\.\\_\\;\\:^]"
+--   translateWord x
+--    | check x = x
+--    | checkLatin x = putOnTag "texttt" x
+--    | otherwise = x
+--translateSystem text = codeText
+-- where
+--   codeText = foldl translateSystem text systemC
+--   systemC = text #~ "[\\][\\$]SYSTEM[\\][\\_]([A-Za-z0-9]*)"
+--   n = length text
+--   translateSystem acum (i1, i2) = (substring 0 i1 acum) ++ (putOnTag "textsc" syst) ++ (substring (i1 + i2 + 1) n acum)
+--       where
+--         (_, _, _, [syst]) = (substring i1 i2 acum) /~ "[\\][\\$]SYSTEM[\\][\\_]([A-Za-z0-9]*)"
+--
+--tuplst (a, b, c) = c
+--substring a b = (Data.List.take b).(Data.List.drop a)
+--listing = ""
+--printer [] = do return ()
+--printer (x:xs) = do
+--                   print x
+--                   printer xs
+--
+--main :: IO ()
+--main = do
+--         let labname = "lab2"
+--             result = ("test/"++labname++"/result.tex")
+--             dir = "test/" ++labname
+--         labBmstu <- readFile $ dir++"/lab_report.bmstu"
+--         preambula <- readFile "test/preambula.txt"
+--         code <- readFile $ dir++"/code.hs"
+--         let meta = lines labBmstu
+--             [title, author, dept, reviewer, task, body, test] = list
+--             list = reverse $ parseLR allTags meta []
+--             makeDoc = foldl (++) []
+--               [putOnTag "begin" "document",
+--               "\\maketitle\n",
+--               putOnTag "section" "Задача",
+--               giveLn parsedTask,
+--               putOnTag "section" "Реализация",
+--               giveLn parsedBody,
+--               putOnTag "section" "Тестирование",
+--               giveLn parsedTest,
+--               putOnTag "end" "document"]
+--             begins = map (add3 0) $ code #~ "{-BEGIN_L KEY = {([A-Za-z0-9]*)} NAME = {([A-Za-z0-9]*)}-}"
+--             ends = map (add3 1) $ code #~ "{-END_L-}"
+--             add3 num (x, y) = (x, y, num)
+--             listings = sortOn (\(a,b,c) -> a) $ begins ++ ends
+--             tupfst (a, b, c) = a
+--             listingsP = makeListingCoords listings [] []
+--             checkListings = length listingsP == 0
+--             lst = generateListing listingsP code
+--             ids = map (!!0) lst
+--             lMap = Map.fromList $ map (\[a, b, c] -> (a, [b, withoutRules c])) lst
+--             beg = "{-BEGIN_L KEY = {([A-Za-z0-9]*)} NAME = {([A-Za-z0-9]*)}-}"
+--             end = "{-END_L-}"
+--             withoutRules x = intercalate "\n" $ filter (\x ->not (x =~ (end++"|"++beg))) $ splitOn "\n" x
+--             toParse x = parseImports lMap $ translateSystem $ translateLatin $ translateBsl x
+--             parsedTask = toParse task
+--             parsedBody = toParse body
+--             parsedTest = toParse test
+--         if any (\x -> 0 == length x) lst
+--         then print $ id "Wrong listings"
+--         else do
+--                if not $ allUnique ids
+--                then print $ id "Listings have same id"
+--                else do
+--                        print parsedTask
+--                        writeFile result $ preambula ++ "\n"
+--                        appendFile result $ putOnTag "title" title
+--                        appendFile result $ putOnTag "author" $ concatAttrs [author, "Группа: " ++ dept, "Преподаватель: " ++ reviewer]
+--                        appendFile result $ makeDoc
+----                        printer $ code !~ "{-BEGIN_L KEY = {([0-9]*)} NAME = {([A-Za-z0-9]*)}-}{-END_L-}-"
+----                        print $ "aa..cqwcqww{}\n\raa" !~ "(.|[[:space:]])+"
+----                        print lMap
+----                        print $ (translateBsl task) /~ "\\$IMPORT\\\\{([A-Za-z0-9]*)\\\\}"
+----                        print ("{Отчет по лабор}{аторной работе №5}" =~ "{(.)+}" :: String)
